@@ -3,7 +3,7 @@
 // for windows mysqli_connect("localhost", "root", "", "test_db")
 
 $user = 'jay';
-$password = 'Eptx79934!';
+$password = '';
 $db = 'test_db';
 $host = 'localhost:3307';
 
