@@ -2,43 +2,49 @@
 //Syntax for mysqli_connect("host name", "username", "password", "database name");
 // for windows mysqli_connect("localhost", "root", "", "test_db")
 
-
-// Change these to your utep login before running. These are credentials for my MAMP server databases.
 $user = 'jay';
 $password = 'Eptx79934!';
 $db = 'test_db';
 $host = 'localhost:3307';
-$conn = mysqli_connect($host, $user, $password, $db);
 
+
+
+$conn = mysqli_connect($host, $user, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
 if(isset($_POST['submit'])){
-
+    $firstName = $_POST['firstName'];
+    $middleName = $_POST['middleName'];
+    $lastName = $_POST['lastName'];
     $inputEmail = $_POST['inputEmail'];
     $inputPassword = $_POST['inputPassword'];
 
-    $query = "select * from user where U_email='$inputEmail' and U_password='$inputPassword'";
-    //$query = "INSERT INTO USER VALUES('{$txtUsername}','{$txtPass}')";
-    $result = mysqli_query($conn,$query); // Executing and storing the incoming data in result
-    //Now we need to check whether the data has been retrieved or not. If the data si retrieved the login
-    // is successful otherwise it failed.
+    $query = "select * from user where U_email='$inputEmail'";
+    $result = mysqli_query($conn,$query);
 
     if(!$result){
         die('Query FAILED');
     }else{
-
+        // Check to see if an email already exists.
         $found = mysqli_fetch_assoc($result);
-        if($found != null) {
-            session_start();
-            $_SESSION = $_POST;
-            session_write_close();
-            echo '<script>alert("Login Successful")</script>';
-            header('Location: profile.php');
-
+        if($found['U_email']!= null) {
+            echo '<script>alert("An account already exists for this email")</script>';
         }else{
-            echo '<script>alert("Login Failed")</script>';
+            $query = " INSERT INTO user VALUES('{$inputEmail}','{$firstName}','{$middleName}','{$lastName}','{$inputPassword}',0) ";
+            $result = mysqli_query($conn,$query);
+            if(!$result){
+                die('<script>alert("User Could not be posted at this time.")</script>');
+            }else{
+                session_start();
+                $_SESSION = $_POST;
+                session_write_close();
+                echo '<script>alert("Account created successfully")</script>';
+                header('Location: profile.php');
+
+            }
+
         }
     }
 }
@@ -63,21 +69,20 @@ if(isset($_POST['submit'])){
 
 <body class="text-center">
 <div class="cccontainer", style="margin:auto">
-    <form class="login.php" method="POST">
+    <form class="register.php" action ="register.php" method="POST">
         <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Create new account</h1>
+        <label for="firstName" class="sr-only">First Name</label>
+        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required>
+        <label for="middleName" class="sr-only">Middle Name</label>
+        <input type="text" id="middleName" name="middleName" class="form-control" placeholder="Middle Name">
+        <label for="lastName" class="sr-only">Last Name</label>
+        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" name="register" type="submit" onclick="window.location.href
-        ='register.php';">Register</button>
-        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Submit</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
 </div>
@@ -92,6 +97,7 @@ if(isset($_POST['submit'])){
         crossorigin="anonymous"></script>
 </body>
 </html>
+
 
 
 
