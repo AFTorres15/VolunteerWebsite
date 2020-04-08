@@ -1,3 +1,49 @@
+<?php
+//Syntax for mysqli_connect("host name", "username", "password", "database name");
+// for windows mysqli_connect("localhost", "root", "", "test_db")
+
+
+// Change these to your utep login before running. These are credentials for my MAMP server databases.
+$user = 'jay';
+$password = 'Eptx79934!';
+$db = 'test_db';
+$host = 'localhost:3307';
+$conn = mysqli_connect($host, $user, $password, $db);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if(isset($_POST['submit'])){
+
+    $inputEmail = $_POST['inputEmail'];
+    $inputPassword = $_POST['inputPassword'];
+
+    $query = "select * from user where U_email='$inputEmail' and U_password='$inputPassword'";
+    //$query = "INSERT INTO USER VALUES('{$txtUsername}','{$txtPass}')";
+    $result = mysqli_query($conn,$query); // Executing and storing the incoming data in result
+    //Now we need to check whether the data has been retrieved or not. If the data si retrieved the login
+    // is successful otherwise it failed.
+
+    if(!$result){
+        die('Query FAILED');
+    }else{
+
+        $found = mysqli_fetch_assoc($result);
+        if($found != null) {
+            session_start();
+            $_SESSION = $_POST;
+            session_write_close();
+            echo '<script>alert("Login Successful")</script>';
+            header('Location: profile.php');
+
+        }else{
+            echo '<script>alert("Login Failed")</script>';
+        }
+    }
+}
+?>
+
 
 <!DOCTYPE HTML>
 
@@ -17,7 +63,7 @@
 
 <body class="text-center">
 <div class="cccontainer", style="margin:auto">
-    <form action="profile.php" method="GET">
+    <form class="login.php" method="POST">
         <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>

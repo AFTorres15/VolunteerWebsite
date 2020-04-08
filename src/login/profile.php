@@ -1,22 +1,32 @@
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- custom CSS -->
     <title><?php echo $first_name;?> <?php echo $last_name?>s Profile</title>
+
 </head>
 <body>
 <?php
 
+session_start();
 $user = 'jay';
-$password = '';
+$password = 'Eptx79934!';
 $db = 'test_db';
 $host = 'localhost:3307';
 
 
-if (isset($_GET['inputEmail'])){
-    $email = $_GET['inputEmail'];
-    $pass = $_GET['inputPassword'];
+if (isset($_SESSION['inputEmail'])){
+
+    $email = $_SESSION['inputEmail'];
+    $pass = $_SESSION['inputPassword'];
     $link = mysqli_connect($host, $user, $password, $db) or die ("Could not connect to the server");
     mysqli_select_db($link,$db) or die ("That database could not be found");
-    $query = "SELECT * FROM user WHERE U_email='$email'  and U_password='$pass'";
+    $query = "SELECT * FROM user WHERE U_email='$email'";
     $user_query = mysqli_query($link,$query) or die ("The query could not be completed");
 
     if(mysqli_num_rows($user_query) != 1){
@@ -30,7 +40,7 @@ if (isset($_GET['inputEmail'])){
         $approval_status = $row['U_isApproved'];
     }
     if($email != $db_email){
-        die("There ahs been a fatal error. Please try again.");
+        die("There has been a fatal error. Please try again.");
     }
     if($approval_status == 0){
         $status = "Not approved";
@@ -44,6 +54,7 @@ if (isset($_GET['inputEmail'])){
         $isCoordinator = "Event Coordinator";
     }
 
+    session_destroy();
 
 ?>
     <h2><?php echo $first_name; ?> <?php echo $last_name; ?></h2><br/>

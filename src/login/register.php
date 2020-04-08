@@ -3,7 +3,7 @@
 // for windows mysqli_connect("localhost", "root", "", "test_db")
 
 $user = 'jay';
-$password = '';
+$password = 'Eptx79934!';
 $db = 'test_db';
 $host = 'localhost:3307';
 
@@ -37,7 +37,12 @@ if(isset($_POST['submit'])){
             if(!$result){
                 die('<script>alert("User Could not be posted at this time.")</script>');
             }else{
+                session_start();
+                $_SESSION = $_POST;
+                session_write_close();
                 echo '<script>alert("Account created successfully")</script>';
+                header('Location: profile.php');
+
             }
 
         }
@@ -64,7 +69,7 @@ if(isset($_POST['submit'])){
 
 <body class="text-center">
 <div class="cccontainer", style="margin:auto">
-    <form class="login.php" method="post">
+    <form class="register.php" action ="register.php" method="POST">
         <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Create new account</h1>
         <label for="firstName" class="sr-only">First Name</label>
