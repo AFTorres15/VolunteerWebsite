@@ -6,16 +6,17 @@
 <?php
 
 $user = 'jay';
-$password = 'Eptx79934!';
+$password = '';
 $db = 'test_db';
 $host = 'localhost:3307';
 
 
 if (isset($_GET['inputEmail'])){
     $email = $_GET['inputEmail'];
+    $pass = $_GET['inputPassword'];
     $link = mysqli_connect($host, $user, $password, $db) or die ("Could not connect to the server");
     mysqli_select_db($link,$db) or die ("That database could not be found");
-    $query = "SELECT * FROM user WHERE U_email='$email'";
+    $query = "SELECT * FROM user WHERE U_email='$email'  and U_password='$pass'";
     $user_query = mysqli_query($link,$query) or die ("The query could not be completed");
 
     if(mysqli_num_rows($user_query) != 1){
@@ -26,15 +27,15 @@ if (isset($_GET['inputEmail'])){
         $middle_name = $row['U_middle_name'];
         $last_name = $row['U_last_name'];
         $db_email = $row['U_email'];
-        $approval_status = $row['U_is_Approved'];
+        $approval_status = $row['U_isApproved'];
     }
     if($email != $db_email){
         die("There ahs been a fatal error. Please try again.");
     }
     if($approval_status == 0){
-        $status = "This account is not yet approved";
+        $status = "Not approved";
     }else{
-        $status = "This user is approved as a volunteer";
+        $status = "Approved";
     }
     $isCoordinator = "None";
     $query = "SELECT *FROM eventcordinator WHERE U_email ='$email'";
