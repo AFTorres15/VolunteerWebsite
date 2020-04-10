@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/login/login.php" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/login/profile.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/login/register.php" dialect="MySQL" />
   </component>
 </project>
