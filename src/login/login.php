@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
             $_SESSION = $_POST;
             session_write_close();
             echo '<script>alert("Login Successful")</script>';
-            header('Location: profile.php');
+            header('Location: login/profile.php');
 
         }else{
             echo '<script>alert("Login Failed")</script>';

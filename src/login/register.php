@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
                 $_SESSION = $_POST;
                 session_write_close();
                 echo '<script>alert("Account created successfully")</script>';
-                header('Location: profile.php');
+                header('Location: login/profile.php');
 
             }
 
