@@ -2,13 +2,10 @@
 //Syntax for mysqli_connect("host name", "username", "password", "database name");
 // for windows mysqli_connect("localhost", "root", "", "test_db")
 
-$user = 'jay';
-$password = 'Eptx79934!';
-$db = 'test_db';
-$host = 'localhost:3307';
-
-
-
+$user = 'jjjames';
+$password = 'utep123';
+$db = 'S20pm_team10';
+$host = 'ilinkserver.cs.utep.edu';
 $conn = mysqli_connect($host, $user, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
@@ -40,8 +37,9 @@ if(isset($_POST['submit'])){
                 session_start();
                 $_SESSION = $_POST;
                 session_write_close();
+                header('Location: profile.php');
                 echo '<script>alert("Account created successfully")</script>';
-                header('Location: login/profile.php');
+
 
             }
 

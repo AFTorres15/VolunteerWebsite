@@ -14,10 +14,10 @@
 <?php
 
 session_start();
-$user = 'jay';
-$password = 'Eptx79934!';
-$db = 'test_db';
-$host = 'localhost:3307';
+$user = 'jjjames';
+$password = 'utep123';
+$db = 'S20pm_team10';
+$host = 'ilinkserver.cs.utep.edu';
 
 
 if (isset($_SESSION['inputEmail'])){

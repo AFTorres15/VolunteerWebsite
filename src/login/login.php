@@ -4,10 +4,10 @@
 
 
 // Change these to your utep login before running. These are credentials for my MAMP server databases.
-$user = 'jay';
-$password = 'Eptx79934!';
-$db = 'test_db';
-$host = 'localhost:3307';
+$user = 'jjjames';
+$password = 'utep123';
+$db = 'S20pm_team10';
+$host = 'ilinkserver.cs.utep.edu';
 $conn = mysqli_connect($host, $user, $password, $db);
 
 if (!$conn) {
@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
             $_SESSION = $_POST;
             session_write_close();
             echo '<script>alert("Login Successful")</script>';
-            header('Location: login/profile.php');
+            header('Location: profile.php');
 
         }else{
             echo '<script>alert("Login Failed")</script>';
