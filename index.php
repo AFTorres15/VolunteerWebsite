@@ -5,16 +5,16 @@
 <html>
 <head>
     <title>Layout Master</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <nav class="zone orange">
     <ul class="main-nav">
-        <li><a href="index.css">About</a></li>
-        <li><a href="index.css">Contact Us</a></li>
-        <li class="login"><a href="index.css">Login</a></li>
-        <li class="register"><a href="index.css">Register</a></li>
+        <li><a href="style.css">About</a></li>
+        <li><a href="style.css">Contact Us</a></li>
+        <li class="login"><a href="style.css">Login</a></li>
+        <li class="register"><a href="style.css">Register</a></li>
     </ul>
 </nav>
 <div class=" container zone red grid-wrapper">
