@@ -20,9 +20,10 @@ if(isset($_POST['submit'])){
     $inputPassword = $_POST['inputPassword'];
 
     $query = "select * from user where U_email='$inputEmail' and U_password='$inputPassword'";
-    //$query = "INSERT INTO USER VALUES('{$txtUsername}','{$txtPass}')";
-    $result = mysqli_query($conn,$query); // Executing and storing the incoming data in result
-    //Now we need to check whether the data has been retrieved or not. If the data si retrieved the login
+    $result = mysqli_query($conn,$query);
+
+    // Executing and storing the incoming data in result.
+    // Now we need to check whether the data has been retrieved or not. If the data is retrieved the login.
     // is successful otherwise it failed.
 
     if(!$result){
@@ -65,6 +66,7 @@ if(isset($_POST['submit'])){
 <div class="cccontainer", style="margin:auto">
     <form class="login.php" method="POST">
         <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
