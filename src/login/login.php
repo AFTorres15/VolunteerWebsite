@@ -4,12 +4,13 @@
 
 
 // Change these to your utep login before running. These are credentials for my MAMP server databases.
-$user = 'jjjames';
+/*$user = 'jjjames';
 $password = 'utep123';
 $db = 'S20pm_team10';
 $host = 'ilinkserver.cs.utep.edu';
 $conn = mysqli_connect($host, $user, $password, $db);
-
+*/
+require_once('..\config.php');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
