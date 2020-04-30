@@ -8,7 +8,7 @@ $db = 'S20pm_team10';
 $host = 'ilinkserver.cs.utep.edu';
 */
 require_once('..\config.php');
-$conn = mysqli_connect($host, $user, $password, $db);
+//$conn = mysqli_connect($host, $user, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }

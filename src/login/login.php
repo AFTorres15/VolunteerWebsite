@@ -38,8 +38,18 @@ if(isset($_POST['submit'])){
             session_write_close();
             echo '<script>alert("Login Successful")</script>';
             header('Location: profile.php');
+            $query="SELECT U_email FROM eventcordinator WHERE U_email='$inputEmail'";
+            $result=mysqli_query($conn,$query);
+            if(mysqli_num_rows($result)==1) {
+                header('Location: ../EventCoordinatorPage/EventCoordinator.php');
+            }else{
+                $query="SELECT U_email FROM volunteer WHERE U_email='$inputEmail'";
+                $result=mysqli_query($conn,$query);
+                if(mysqli_num_rows($result)==1) {
+                    header('Location: ../user/user.php');
 
-        }else{
+                }
+            }        }else{
             echo '<script>alert("Login Failed")</script>';
         }
     }
