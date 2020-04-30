@@ -1,5 +1,5 @@
 <?php
-
+require_once('..\config.php');
 ?>
 
 <!doctype html>
@@ -47,38 +47,32 @@
                         allowing the user to sort filter and add events. This webpage follow the utep graphic identity
                         with its font, and colors.</p>
                     <h2 class="small text-left">The following table is currently hardcoded</h2>
-                    <table class="table">
-                        <thead>
+
+                    <?php
+                    $query= ("SELECT * FROM event");
+                   $result=$conn->query($query);
+                    echo "<table class=\"table\">
                         <tr>
-                            <th>#</th>
-                            <th>Event Name</th>
-                            <th>Event Description</th>
-                            <th>Event Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>HS Hack</td>
-                            <td>Cyber security hackacthon for highschool students</td>
-                            <td>April 25</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Hour of Code</td>
-                            <td>Participate in nation wide hour of code teaching elementary students.</td>
-                            <td>April 21-24</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Technology Training Class</td>
-                            <td>Server community seniors by helping them connect to the world wide web. Introduce them
-                                to facebook and reunite them with loved ones.
-                            </td>
-                            <td>April 11</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <th>Event</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        </tr>";
+                    if($result->num_rows>0){
+                        while ($row=$result->fetch_assoc()){
+                            echo "<tr>";
+                            echo "<td>".$row["E_name"]."</td>";
+                            echo "<td>".$row["E_description"]."</td>";
+                            echo "<td>".$row["E_start_time"]."</td>";
+                            echo "<td>".$row["E_end_time"]."</td>";
+                            echo"</tr>";
+
+                        }
+                      }else {
+                        echo "0 Results";
+                    }
+                    echo"</table>";
+                    ?>
                 </div>
             </div>
         </div>
