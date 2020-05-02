@@ -14,11 +14,6 @@
 <?php
 
 session_start();
-/*user = 'jjjames';
-$password = 'utep123';
-$db = 'S20pm_team10';
-$host = 'ilinkserver.cs.utep.edu';
-*/
 require_once('..\config.php');
 
 if (isset($_SESSION['inputEmail'])){
@@ -72,9 +67,6 @@ if (isset($_SESSION['inputEmail'])){
 
 <?php
 }else die ("You need to specify a username!")
-
-
-
 ?>
 
 

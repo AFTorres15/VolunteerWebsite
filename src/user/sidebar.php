@@ -3,8 +3,8 @@
 
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Search</a></li>
+        <li><a href="userProfile.php">Profile</a></li>
+        <li><a href="user.php">Events</a></li>
+        <li><a href="#">My Events</a></li>
     </ul>
 </div>
