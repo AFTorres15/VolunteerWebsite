@@ -129,7 +129,7 @@ if (isset($_SESSION['inputEmail'])){
                                                             <div class="form-group">
                                                                 <label>Full Name</label>
                                                                 <input class="form-control" type="text" name="name"
-                                                                      value =<?php echo $first_name." ".$middle_name." ".$last_name;  ?>>
+                                                                      value =<?php echo $first_name." ".$middle_name." ".$last_name;  ?>disable>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -138,7 +138,7 @@ if (isset($_SESSION['inputEmail'])){
                                                             <div class="form-group">
                                                                 <label>Email</label>
                                                                 <input class="form-control" type="text"
-                                                                       value=<?php echo $db_email;?> >
+                                                                       value=<?php echo $db_email;?> disable >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -146,23 +146,22 @@ if (isset($_SESSION['inputEmail'])){
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Skills</label>
-                                                                <input class="form-control" type="text"
-                                                                       <?php
-                                                                       $query = "SELECT VS_skill FROM volunteerskills WHERE U_email = '$db_email'";
-                                                                       $result = mysqli_query($conn,$query);
-                                                                       if(mysqli_num_rows($result)==0){
-                                                                           $skills="No skills";
-                                                                       }else{
-                                                                           $skills= mysqli_fetch_row($result) ;
-                                                                       }
-                                                                       ?>
+                                                                <label>
+                                                                    <?php
 
-                                                                       value=<?php
-                                                                        for($i=0;$i<mysqli_num_rows($result);$i++){
-                                                                            echo "$skills[$i]";
-                                                                        }
+                                                                    for($i=0;$i<3;$i++){
                                                                         ?>
-                                                                       </div>
+                                                                        <button type="button" class="btn btn-default btn-rounded">Default</button>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                    <p> WILL WORK ON THIS LATER</p>
+
+                                                                </label>
+
+
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
