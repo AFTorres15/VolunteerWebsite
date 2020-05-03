@@ -1,5 +1,43 @@
 <?php
+session_start();
 require_once('..\config.php');
+
+if (isset($_SESSION['inputEmail'])){
+
+$email = $_SESSION['inputEmail'];
+$pass = $_SESSION['inputPassword'];
+//$link = mysqli_connect($host, $user, $password, $db) or die ("Could not connect to the server");
+mysqli_select_db($conn,$db) or die ("That database could not be found");
+$query = "SELECT * FROM user WHERE U_email='$email'";
+$user_query = mysqli_query($conn,$query) or die ("The query could not be completed");
+
+if(mysqli_num_rows($user_query) != 1){
+    die("That username could not be found");
+}
+while($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)){
+    $first_name = $row['U_first_name'];
+    $middle_name = $row['U_middle_name'];
+    $last_name = $row['U_last_name'];
+    $db_email = $row['U_email'];
+    $approval_status = $row['U_isApproved'];
+}
+if($email != $db_email){
+    die("There has been a fatal error. Please try again.");
+}
+if($approval_status == 0){
+    $status = "Not approved";
+}else{
+    $status = "Approved";
+}
+$isCoordinator = "None";
+$query = "SELECT *FROM eventcordinator WHERE U_email ='$email'";
+$user_query = mysqli_query($conn,$query) or die ("The query could not be completed");
+if(mysqli_num_rows($user_query) == 1){
+    $isCoordinator = "Event Coordinator";
+}
+
+//session_destroy();
+
 ?>
 
 <!doctype html>
@@ -90,5 +128,8 @@ require_once('..\config.php');
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<?php
+}else die ("You are not logged in.")
+?>
 </body>
 </html>

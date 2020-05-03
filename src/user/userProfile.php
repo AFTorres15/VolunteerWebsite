@@ -35,7 +35,7 @@ if (isset($_SESSION['inputEmail'])){
         $isCoordinator = "Event Coordinator";
     }
 
-    session_destroy();
+    //session_destroy();
 
 ?>
 
@@ -85,19 +85,33 @@ if (isset($_SESSION['inputEmail'])){
                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                         <div class="text-center text-sm-left mb-2 mb-sm-0">
                                             <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"><?php echo $first_name . " " . $middle_name . " " . $last_name ?></h4>
-                                            <p class="mb-0">@johnny.s</p>
-                                            <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+                                            <p class="mb-0"><?php echo $db_email?></p>
                                             <div class="mt-2">
-                                                <button class="btn btn-primary" type="button">
+                                                <button disabled class="btn btn-primary" type="button">
                                                     <i class="fa fa-fw fa-camera"></i>
                                                     <span>Change Photo</span>
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="text-center text-sm-right">
-                                            <span class="badge badge-secondary">administrator</span>
-                                            <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
-                                        </div>
+                                            <?php
+
+                                            $query="SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
+                                            $result=mysqli_query($conn,$query);
+                                            if(mysqli_num_rows($result)==1) {
+                                                //header('Location: ../EventCoordinatorPage/EventCoordinator.php');
+                                                // header('Location: profile.php');
+                                                $accountType="Event Coordinator";
+                                            }else{
+                                                $query="SELECT U_email FROM volunteer WHERE U_email='$db_email'";
+                                                $result=mysqli_query($conn,$query);
+                                                if(mysqli_num_rows($result)==1) {
+                                                   $accountType="Volunteer";
+                                                }
+                                            }
+                                            ?>
+                                            <span class="badge badge-secondary"><?php echo $accountType ?></span>
+                                            </div>
                                     </div>
                                 </div>
 
@@ -115,14 +129,7 @@ if (isset($_SESSION['inputEmail'])){
                                                             <div class="form-group">
                                                                 <label>Full Name</label>
                                                                 <input class="form-control" type="text" name="name"
-                                                                       placeholder="John Smith" value="John Smith">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Username</label>
-                                                                <input class="form-control" type="text" name="username"
-                                                                       placeholder="johnny.s" value="johnny.s">
+                                                                      value =<?php echo $first_name." ".$middle_name." ".$last_name;  ?>>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -131,17 +138,31 @@ if (isset($_SESSION['inputEmail'])){
                                                             <div class="form-group">
                                                                 <label>Email</label>
                                                                 <input class="form-control" type="text"
-                                                                       placeholder="user@example.com">
+                                                                       value=<?php echo $db_email;?> >
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col mb-3">
+                                                        <div class="col">
                                                             <div class="form-group">
-                                                                <label>About</label>
-                                                                <textarea class="form-control" rows="5"
-                                                                          placeholder="My Bio"></textarea>
-                                                            </div>
+                                                                <label>Skills</label>
+                                                                <input class="form-control" type="text"
+                                                                       <?php
+                                                                       $query = "SELECT VS_skill FROM volunteerskills WHERE U_email = '$db_email'";
+                                                                       $result = mysqli_query($conn,$query);
+                                                                       if(mysqli_num_rows($result)==0){
+                                                                           $skills="No skills";
+                                                                       }else{
+                                                                           $skills= mysqli_fetch_row($result) ;
+                                                                       }
+                                                                       ?>
+
+                                                                       value=<?php
+                                                                        for($i=0;$i<mysqli_num_rows($result);$i++){
+                                                                            echo "$skills[$i]";
+                                                                        }
+                                                                        ?>
+                                                                       </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -181,7 +202,7 @@ if (isset($_SESSION['inputEmail'])){
                                             </div>
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
-                                                    <button class="btn btn-primary" type="submit">Save Changes</button>
+                                                    <button disabled class="btn btn-primary" type="submit">Save Changes</button>
                                                 </div>
                                             </div>
                                         </form>
