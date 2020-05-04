@@ -18,7 +18,7 @@ if (isset($_SESSION['inputEmail'])){
         $middle_name = $row['U_middle_name'];
         $last_name = $row['U_last_name'];
         $db_email = $row['U_email'];
-        $approval_status = $row['U_isApproved'];
+        $approval_status = $row['U_is_approved'];
     }
     if ($email != $db_email) {
         die("There has been a fatal error. Please try again.");
@@ -202,7 +202,10 @@ if (isset($_SESSION['inputEmail'])){
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
                                                     <button disabled class="btn btn-primary" type="submit">Save Changes</button>
+                                                </div> <div class="col d-flex justify-content-end">
+                                                    <button disabled class="btn btn-primary" type="submit">Edit User</button>
                                                 </div>
+
                                             </div>
                                         </form>
 

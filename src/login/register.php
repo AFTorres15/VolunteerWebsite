@@ -19,6 +19,7 @@ if(isset($_POST['submit'])){
     $lastName = $_POST['lastName'];
     $inputEmail = $_POST['inputEmail'];
     $inputPassword = $_POST['inputPassword'];
+    $profile_picture = "";
 
     $query = "select * from user where U_email='$inputEmail'";
     $result = mysqli_query($conn,$query);
@@ -31,7 +32,8 @@ if(isset($_POST['submit'])){
         if($found['U_email']!= null) {
             echo '<script>alert("An account already exists for this email")</script>';
         }else{
-            $query = " INSERT INTO user VALUES('{$inputEmail}','{$firstName}','{$middleName}','{$lastName}','{$inputPassword}',0) ";
+            $query = " INSERT INTO user VALUES('{$inputEmail}','{$firstName}','{$middleName}','{$lastName}',
+                         '{$inputPassword}',0,'{$profile_picture}') ";
             $result = mysqli_query($conn,$query);
             if(!$result){
                 die('<script>alert("User Could not be posted at this time.")</script>');
@@ -39,7 +41,7 @@ if(isset($_POST['submit'])){
                 session_start();
                 $_SESSION = $_POST;
                 session_write_close();
-                header('Location: profile.php');
+                header('Location: ../user/userProfile.php');
                 echo '<script>alert("Account created successfully")</script>';
 
 
