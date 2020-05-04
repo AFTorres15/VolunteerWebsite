@@ -2,11 +2,13 @@
 //Syntax for mysqli_connect("host name", "username", "password", "database name");
 // for windows mysqli_connect("localhost", "root", "", "test_db")
 
-$user = 'jjjames';
+/*$user = 'jjjames';
 $password = 'utep123';
 $db = 'S20pm_team10';
 $host = 'ilinkserver.cs.utep.edu';
-$conn = mysqli_connect($host, $user, $password, $db);
+*/
+require_once('..\config.php');
+//$conn = mysqli_connect($host, $user, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }

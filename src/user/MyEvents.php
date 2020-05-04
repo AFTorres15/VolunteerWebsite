@@ -51,7 +51,7 @@ if(mysqli_num_rows($user_query) == 1){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="sidebar.css">
-    <title>Volunteer Login Page</title><!--This is what the tab is-->
+    <title>Volunteer Events Page</title><!--This is what the tab is-->
     <!-- EmbedFont-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -70,38 +70,73 @@ if(mysqli_num_rows($user_query) == 1){
                         <div class="bar2"></div>
                         <div class="bar3"></div>
                     </div>
-                    <h1 class="text-center">Event Coordinator Home Page</h1>
-                    <h2 class="small text-center">Second Header</h2>
-                    <p class="text-left">This is a very basic visual of what the website will look like for event
-                        coordinators. Currently the only button that works is the hamberger menue button. None of the
-                        links work currently but will soon be populated and editable. We are having technical
-                        difficulites with php and linking our database. Eventually the table below will be interactive
-                        allowing the user to sort filter and add events. This webpage follow the utep graphic identity
-                        with its font, and colors.</p>
-                    <h2 class="small text-left">The following table is currently hardcoded</h2>
+                    <h1 class="text-center">Enlisted Events</h1>
 
                     <?php
-                    $query= ("SELECT * FROM event");
-                   $result=$conn->query($query);
+                    $query= (" SELECT E_id FROM volunteerevent WHERE U_email='$db_email' AND VE_is_approved=1");
+                    $result=$conn->query($query);
                     echo "<table class=\"table\">
+                       <tr><th colspan='4'>Approved Events</th></tr>
                         <tr>
                         <th>Event</th>
                         <th>Description</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         </tr>";
+
                     if($result->num_rows>0){
                         while ($row=$result->fetch_assoc()){
-                            echo "<tr>";
-                            echo "<td>".$row["E_name"]."</td>";
-                            echo "<td>".$row["E_description"]."</td>";
-                            echo "<td>".$row["E_start_time"]."</td>";
-                            echo "<td>".$row["E_end_time"]."</td>";
-                            echo"</tr>";
+                            $query=("SELECT * FROM event WHERE E_id= $row[E_id]");
+                            $event_query = mysqli_query($conn, $query) or die ("The query could not be completed");
+                            $EventResult=$conn->query($query);
+                            while ($Erow=$EventResult->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $Erow["E_name"] . "</td>";
+                                echo "<td>" . $Erow["E_description"] . "</td>";
+                                echo "<td>" . $Erow["E_start_time"] . "</td>";
+                                echo "<td>" . $Erow["E_end_time"] . "</td>";
+                                echo "</tr>";
+                            }
 
                         }
-                      }else {
-                        echo "0 Results";
+                    }else {
+                        //echo "0 Results";
+                        echo "<tr><td>"."No Approved Events."."</td></tr>";
+                    }
+                    echo"</table>";
+                    ?>
+
+
+                    <?php
+                    $query= (" SELECT E_id FROM volunteerevent WHERE U_email='$db_email'AND VE_is_approved=0 ");
+                    $result=$conn->query($query);
+                    echo "<table class=\"table\">
+                       <tr><th colspan='4'>Pending Approval</th></tr>
+                        <tr>
+                        <th>Event</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        </tr>";
+
+                    if($result->num_rows>0){
+                        while ($row=$result->fetch_assoc()){
+                            $query=("SELECT * FROM event WHERE E_id= $row[E_id] ");
+                            $event_query = mysqli_query($conn, $query) or die ("The query could not be completed");
+                            $EventResult=$conn->query($query);
+                            while ($Erow=$EventResult->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $Erow["E_name"] . "</td>";
+                                echo "<td>" . $Erow["E_description"] . "</td>";
+                                echo "<td>" . $Erow["E_start_time"] . "</td>";
+                                echo "<td>" . $Erow["E_end_time"] . "</td>";
+                                echo "</tr>";
+                            }
+
+                        }
+                    }else {
+                        //echo "0 Results";
+                        echo "<tr><td>"."No pending Events."."</td></tr>";
                     }
                     echo"</table>";
                     ?>

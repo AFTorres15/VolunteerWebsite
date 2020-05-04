@@ -4,12 +4,13 @@
 
 
 // Change these to your utep login before running. These are credentials for my MAMP server databases.
-$user = 'jjjames';
+/*$user = 'jjjames';
 $password = 'utep123';
 $db = 'S20pm_team10';
 $host = 'ilinkserver.cs.utep.edu';
 $conn = mysqli_connect($host, $user, $password, $db);
-
+*/
+require_once('..\config.php');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -36,9 +37,20 @@ if(isset($_POST['submit'])){
             $_SESSION = $_POST;
             session_write_close();
             echo '<script>alert("Login Successful")</script>';
-            header('Location: profile.php');
 
-        }else{
+            $query="SELECT U_email FROM eventcordinator WHERE U_email='$inputEmail'";
+            $result=mysqli_query($conn,$query);
+            if(mysqli_num_rows($result)==1) {
+               header('Location: ../EventCoordinatorPage/EventCoordinator.php');
+               // header('Location: profile.php');
+            }else{
+                $query="SELECT U_email FROM volunteer WHERE U_email='$inputEmail'";
+                $result=mysqli_query($conn,$query);
+                if(mysqli_num_rows($result)==1) {
+                    header('Location: ../user/userProfile.php');
+
+                }
+            }        }else{
             echo '<script>alert("Login Failed")</script>';
         }
     }
@@ -77,9 +89,9 @@ if(isset($_POST['submit'])){
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
+        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
         <button class="btn btn-lg btn-primary btn-block" name="register" type="submit" onclick="window.location.href
         ='register.php';">Register</button>
-        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
 </div>
