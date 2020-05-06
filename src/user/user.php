@@ -36,9 +36,14 @@ if(mysqli_num_rows($user_query) == 1){
     $isCoordinator = "Event Coordinator";
 }
 
-if(isset($_POST['submit'])){
+if(isset($_POST['createEvent'])){
     echo '<script>alert("ok")</script>';
     header('Location: ../user/new_event.php');
+}
+
+if(isset($_POST['approveUsers'])){
+    echo '<script>alert("ok")</script>';
+    header('Location: ../user/approve_pending_users.php');
 }
 
 //session_destroy();
@@ -83,8 +88,6 @@ if(isset($_POST['submit'])){
                         difficulites with php and linking our database. Eventually the table below will be interactive
                         allowing the user to sort filter and add events. This webpage follow the utep graphic identity
                         with its font, and colors.</p>
-                    <h2 class="small text-left">The following table is currently hardcoded</h2>
-
                     <?php
                     $query= ("SELECT * FROM event");
                    $result=$conn->query($query);
@@ -102,16 +105,17 @@ if(isset($_POST['submit'])){
                             echo "<td>".$row["E_description"]."</td>";
                             echo "<td>".$row["E_start_time"]."</td>";
                             echo "<td>".$row["E_end_time"]."</td>";
+                            echo "<td><input type=\"submit\" class=\"btn btn-primary\" value=\"Edit\"></td>";
                             echo"</tr>";
-
                         }
                       }else {
-                        echo "0 Results";
+                        echo "";
                     }
                     echo"</table>";
                     ?>
                     <form class="user.php" method="POST">
-                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Create Event</button>
+                        <button class="btn btn-lg btn-primary btn-block" name="createEvent" type="submit">Create Event</button>
+                        <button class="btn btn-lg btn-primary btn-block" name="approveUsers" type="submit">View Pending Users</button>
                     </form>
                 </div>
 

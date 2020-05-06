@@ -2,28 +2,6 @@
 session_start();
 require_once('..\config.php');
 
-if(isset($_POST['submit'])){
-    $email = $_SESSION['inputEmail'];
-    mysqli_select_db($conn, $db) or die ("That database could not be found");
-    $query = "SELECT * FROM user WHERE U_email='$email'";
-    $user_query = mysqli_query($conn, $query) or die ("The query could not be completed");
-    $row = mysqli_fetch_array($user_query);
-    if (mysqli_num_rows($user_query) != 1) {
-        die("That username could not be found");
-    }else{
-        $first_name = $_POST['U_first_name'];
-        $middle_name = $_POST['U_middle_name'];
-        $last_name = $_POST['U_last_name'];
-        $db_email = $_POST['U_email'];
-        echo $first_name;
-
-    }
-
-
-
-
-
-}
 
 if (isset($_SESSION['inputEmail'])){
 
@@ -59,7 +37,15 @@ if (isset($_SESSION['inputEmail'])){
         $isCoordinator = "Event Coordinator";
     }
 
-    //session_destroy();
+
+
+if(isset($_POST['changePassword'])){
+    echo '<script>alert("Change Password")</script>';
+    header('Location: ../user/change_password.php');
+
+}
+
+
 
 ?>
 
@@ -145,41 +131,44 @@ if (isset($_SESSION['inputEmail'])){
 
                                 <div class="tab-content pt-3">
                                     <div class="tab-pane active">
-                                        <form class="form" novalidate="" method="post">
+                                        <form class="form" novalidate="" method="POST">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Full Name</label>
-                                                                <input class="form-control" type="text" name="name"
-                                                                      value =<?php echo $first_name." ".$middle_name." ".$last_name;  ?>disable>
+                                                                <label>Full Name:</label><br>
+                                                                <label><?php echo $first_name." ".$middle_name." ".$last_name;  ?></label>
+<!--                                                                <input class="form-control" type="text" name="name"-->
+<!--                                                                      value =--><?php //echo $first_name." ".$middle_name." ".$last_name;  ?><!--disable>-->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Email</label>
-                                                                <input class="form-control" id="input_Email" name="input_Email" type="text"
-                                                                       value=<?php echo $db_email;?> disable >
+                                                                <label>Email</label><br>
+                                                                <label><?php echo $db_email; ?></label>
+
+<!--                                                                <input class="form-control" id="input_Email" name="input_Email" type="text"-->
+<!--                                                                       value=--><?php //echo $db_email;?><!-- disable >-->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Skills</label>
+                                                                <label>Skills</label><br>
                                                                 <label>
                                                                     <?php
 
-                                                                    for($i=0;$i<3;$i++){
-                                                                        ?>
-                                                                        <button type="button" class="btn btn-default btn-rounded">Default</button>
-                                                                        <?php
+                                                                    $query = "select VS_skill from volunteerskills where U_email='$db_email'";
+                                                                    $result = mysqli_query($conn,$query);
+                                                                    $found = mysqli_fetch_assoc($result);
+                                                                    if(isset($found['VS_skill'])){
+                                                                        echo $found['VS_skill'];
                                                                     }
                                                                     ?>
-                                                                    <p> WILL WORK ON THIS LATER</p>
 
                                                                 </label>
 
@@ -192,41 +181,66 @@ if (isset($_SESSION['inputEmail'])){
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6 mb-3">
-                                                    <div class="mb-2"><b>Change Password</b></div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Current Password</label>
-                                                                <input class="form-control" name="current_password" id="current_password" type="password"
-                                                                       placeholder="••••••">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>New Password</label>
-                                                                <input class="form-control" type="password" name="new_password" id="new_password"
-                                                                       placeholder="••••••">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Confirm <span
-                                                                            class="d-none d-xl-inline">Password</span></label>
-                                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                                       placeholder="••••••">
-                                                            </div>
+<!--                                                    <div class="mb-2"><b>Change Password</b></div>-->
+<!--                                                    <div class="row">-->
+<!--                                                        <div class="col">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label>Current Password</label>-->
+<!--                                                                <input class="form-control" name="current_password" id="current_password" type="password"-->
+<!--                                                                       placeholder="••••••">-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="row">-->
+<!--                                                        <div class="col">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label>New Password</label>-->
+<!--                                                                <input class="form-control" type="password" name="new_password" id="new_password"-->
+<!--                                                                       placeholder="••••••">-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="row">-->
+<!--                                                        <div class="col">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label>Confirm <span-->
+<!--                                                                            class="d-none d-xl-inline">Password</span></label>-->
+<!--                                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password"-->
+<!--                                                                       placeholder="••••••">-->
+<!--                                                            </div>-->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
-                                                    <button disabled class="btn btn-primary" type="submit">Save Changes</button>
+                                                    <p id="demo"></p>
+
+                                                    <script>
+                                                        function myFunction() {
+                                                            var txt;
+                                                            var r = confirm("Press a button!");
+                                                            if (r == true) {
+                                                                <?php
+
+                                                                $sql = "DELETE FROM user WHERE U_email='{$email}'";
+                                                                if ($conn->query($sql) === TRUE) {
+                                                                    echo '<script>alert("Success")</script>';
+                                                                    header('Location: ../login/login.php');
+                                                                } else {
+                                                                    echo '<script>alert("Update Failed")</script>';
+                                                                }
+                                                                ?>
+                                                            } else {
+                                                            }
+                                                            document.getElementById("demo").innerHTML = txt;
+                                                        }
+                                                    </script>
+                                                    <button class="btn btn-primary" name="changePassword" type="submit">Change Password</button>
+                                                    <button class="btn btn-primary" name="deleteAccount" type="submit" onclick="myFunction()">Delete Account</button>
                                             </div>
+
                                         </form>
 
                                     </div>
