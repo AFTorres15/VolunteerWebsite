@@ -36,6 +36,11 @@ if(mysqli_num_rows($user_query) == 1){
     $isCoordinator = "Event Coordinator";
 }
 
+if(isset($_POST['submit'])){
+    echo '<script>alert("ok")</script>';
+    header('Location: ../user/new_event.php');
+}
+
 //session_destroy();
 
 ?>
@@ -105,10 +110,11 @@ if(mysqli_num_rows($user_query) == 1){
                     }
                     echo"</table>";
                     ?>
+                    <form class="user.php" method="POST">
+                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Create Event</button>
+                    </form>
                 </div>
-                <form method="post">
-                    <button class="btn btn-lg btn-primary btn-block" name="New Event" type="submit" formmethod="post">Sign in</button>
-                </form>
+
             </div>
         </div>
     </div>

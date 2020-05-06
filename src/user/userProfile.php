@@ -1,6 +1,30 @@
 <?php
 session_start();
 require_once('..\config.php');
+
+if(isset($_POST['submit'])){
+    $email = $_SESSION['inputEmail'];
+    mysqli_select_db($conn, $db) or die ("That database could not be found");
+    $query = "SELECT * FROM user WHERE U_email='$email'";
+    $user_query = mysqli_query($conn, $query) or die ("The query could not be completed");
+    $row = mysqli_fetch_array($user_query);
+    if (mysqli_num_rows($user_query) != 1) {
+        die("That username could not be found");
+    }else{
+        $first_name = $_POST['U_first_name'];
+        $middle_name = $_POST['U_middle_name'];
+        $last_name = $_POST['U_last_name'];
+        $db_email = $_POST['U_email'];
+        echo $first_name;
+
+    }
+
+
+
+
+
+}
+
 if (isset($_SESSION['inputEmail'])){
 
     $email = $_SESSION['inputEmail'];
@@ -121,7 +145,7 @@ if (isset($_SESSION['inputEmail'])){
 
                                 <div class="tab-content pt-3">
                                     <div class="tab-pane active">
-                                        <form class="form" novalidate="">
+                                        <form class="form" novalidate="" method="post">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="row">
@@ -137,7 +161,7 @@ if (isset($_SESSION['inputEmail'])){
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input class="form-control" type="text"
+                                                                <input class="form-control" id="input_Email" name="input_Email" type="text"
                                                                        value=<?php echo $db_email;?> disable >
                                                             </div>
                                                         </div>
@@ -173,7 +197,7 @@ if (isset($_SESSION['inputEmail'])){
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Current Password</label>
-                                                                <input class="form-control" type="password"
+                                                                <input class="form-control" name="current_password" id="current_password" type="password"
                                                                        placeholder="••••••">
                                                             </div>
                                                         </div>
@@ -182,7 +206,7 @@ if (isset($_SESSION['inputEmail'])){
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>New Password</label>
-                                                                <input class="form-control" type="password"
+                                                                <input class="form-control" type="password" name="new_password" id="new_password"
                                                                        placeholder="••••••">
                                                             </div>
                                                         </div>
@@ -192,7 +216,7 @@ if (isset($_SESSION['inputEmail'])){
                                                             <div class="form-group">
                                                                 <label>Confirm <span
                                                                             class="d-none d-xl-inline">Password</span></label>
-                                                                <input class="form-control" type="password"
+                                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password"
                                                                        placeholder="••••••">
                                                             </div>
                                                         </div>
@@ -202,10 +226,6 @@ if (isset($_SESSION['inputEmail'])){
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
                                                     <button disabled class="btn btn-primary" type="submit">Save Changes</button>
-                                                </div> <div class="col d-flex justify-content-end">
-                                                    <button disabled class="btn btn-primary" type="submit">Edit User</button>
-                                                </div>
-
                                             </div>
                                         </form>
 

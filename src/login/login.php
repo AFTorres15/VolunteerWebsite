@@ -89,7 +89,7 @@ if(isset($_POST['submit'])){
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Add Event</button>
+        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
         <button class="btn btn-lg btn-primary btn-block" name="register" type="submit" onclick="window.location.href
         ='register.php';">Register</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
