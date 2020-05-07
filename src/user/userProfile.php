@@ -37,15 +37,6 @@ if (isset($_SESSION['inputEmail'])){
         $isCoordinator = "Event Coordinator";
     }
 
-
-
-if(isset($_POST['changePassword'])){
-    echo '<script>alert("Change Password")</script>';
-    header('Location: ../user/change_password.php');
-
-}
-
-
 $query = "SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) == 1) {
@@ -57,7 +48,26 @@ if (mysqli_num_rows($result) == 1) {
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) == 1) {
         $accountType = "Volunteer";
+    }else{
+        $accountType = "";
     }
+}
+
+if(isset($_POST['changePassword'])){
+    echo '<script>alert("Change Password")</script>';
+    header('Location: ../user/change_password.php');
+
+}
+
+if(isset($_POST['deleteAccount'])){
+    $sql = "DELETE FROM user WHERE U_email='{$email}'";
+    if ($conn->query($sql) === TRUE) {
+        echo '<script>alert("Success")</script>';
+        header('index.php');
+    } else {
+        echo '<script>alert("Update Failed")</script>';
+    }
+
 }
 
 
@@ -215,29 +225,8 @@ if (mysqli_num_rows($result) == 1) {
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
                                                     <p id="demo"></p>
-
-                                                    <script>
-                                                        function myFunction() {
-                                                            var txt;
-                                                            var r = confirm("Press a button!");
-                                                            if (r == true) {
-                                                                <?php
-
-                                                                $sql = "DELETE FROM user WHERE U_email='{$email}'";
-                                                                if ($conn->query($sql) === TRUE) {
-                                                                    echo '<script>alert("Success")</script>';
-                                                                    header('Location: ../login/login.php');
-                                                                } else {
-                                                                    echo '<script>alert("Update Failed")</script>';
-                                                                }
-                                                                ?>
-                                                            } else {
-                                                            }
-                                                            document.getElementById("demo").innerHTML = txt;
-                                                        }
-                                                    </script>
                                                     <button class="btn btn-primary" name="changePassword" type="submit">Change Password</button>
-                                                    <button class="btn btn-primary" name="deleteAccount" type="submit" onclick="myFunction()">Delete Account</button>
+                                                    <button class="btn btn-primary" name="deleteAccount" type="submit"">Delete Account</button>
                                             </div>
 
                                         </form>
