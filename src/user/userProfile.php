@@ -99,8 +99,6 @@ if (isset($_SESSION['inputEmail'])){
                                             $query="SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
                                             $result=mysqli_query($conn,$query);
                                             if(mysqli_num_rows($result)==1) {
-                                                //header('Location: ../EventCoordinatorPage/EventCoordinator.php');
-                                                // header('Location: profile.php');
                                                 $accountType="Event Coordinator";
                                             }else{
                                                 $query="SELECT U_email FROM volunteer WHERE U_email='$db_email'";

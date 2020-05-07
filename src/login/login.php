@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
             $query="SELECT U_email FROM eventcordinator WHERE U_email='$inputEmail'";
             $result=mysqli_query($conn,$query);
             if(mysqli_num_rows($result)==1) {
-               header('Location: ../EventCoordinatorPage/EventCoordinator.php');
+               header('Location: ../EventCoordinatorPage/EventCoordinatorEvents.php');
                // header('Location: profile.php');
             }else{
                 $query="SELECT U_email FROM volunteer WHERE U_email='$inputEmail'";
@@ -70,7 +70,7 @@ if(isset($_POST['submit'])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- custom CSS -->
-    <link rel="stylesheet" href="login.css">
+    #303C67
     <title>Volunteer Login Page</title><!--This is what the tab is-->
 </head>
 
