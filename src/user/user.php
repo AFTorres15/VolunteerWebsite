@@ -19,7 +19,7 @@ while($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)){
     $middle_name = $row['U_middle_name'];
     $last_name = $row['U_last_name'];
     $db_email = $row['U_email'];
-    $approval_status = $row['U_isApproved'];
+    $approval_status = $row['U_is_approved'];
 }
 if($email != $db_email){
     die("There has been a fatal error. Please try again.");
@@ -34,6 +34,16 @@ $query = "SELECT *FROM eventcordinator WHERE U_email ='$email'";
 $user_query = mysqli_query($conn,$query) or die ("The query could not be completed");
 if(mysqli_num_rows($user_query) == 1){
     $isCoordinator = "Event Coordinator";
+}
+
+if(isset($_POST['createEvent'])){
+    echo '<script>alert("ok")</script>';
+    header('Location: ../user/new_event.php');
+}
+
+if(isset($_POST['approveUsers'])){
+    echo '<script>alert("ok")</script>';
+    header('Location: ../user/approve_pending_users.php');
 }
 
 //session_destroy();
@@ -78,8 +88,6 @@ if(mysqli_num_rows($user_query) == 1){
                         difficulites with php and linking our database. Eventually the table below will be interactive
                         allowing the user to sort filter and add events. This webpage follow the utep graphic identity
                         with its font, and colors.</p>
-                    <h2 class="small text-left">The following table is currently hardcoded</h2>
-
                     <?php
                     $query= ("SELECT * FROM event");
                    $result=$conn->query($query);
@@ -97,15 +105,20 @@ if(mysqli_num_rows($user_query) == 1){
                             echo "<td>".$row["E_description"]."</td>";
                             echo "<td>".$row["E_start_time"]."</td>";
                             echo "<td>".$row["E_end_time"]."</td>";
+                            echo "<td><input type=\"submit\" class=\"btn btn-primary\" value=\"Edit\"></td>";
                             echo"</tr>";
-
                         }
                       }else {
-                        echo "0 Results";
+                        echo "";
                     }
                     echo"</table>";
                     ?>
+                    <form class="user.php" method="POST">
+                        <button class="btn btn-lg btn-primary btn-block" name="createEvent" type="submit">Create Event</button>
+                        <button class="btn btn-lg btn-primary btn-block" name="approveUsers" type="submit">View Pending Users</button>
+                    </form>
                 </div>
+
             </div>
         </div>
     </div>
