@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
                header('Location: ../user/user.php');
                // header('Location: profile.php');
             }else{
-                $query="SELECT U_email FROM volunteer WHERE U_email='$inputEmail'";
+                $query="SELECT U_email FROM user WHERE U_email='$inputEmail'";
                 $result=mysqli_query($conn,$query);
                 if(mysqli_num_rows($result)==1) {
                     header('Location: ../user/userProfile.php');

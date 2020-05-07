@@ -3,7 +3,7 @@ session_start();
 require_once('..\config.php');
 
 
-if (isset($_SESSION['inputEmail'])){
+if (isset($_SESSION['inputEmail'])) {
 
     $email = $_SESSION['inputEmail'];
     $pass = $_SESSION['inputPassword'];
@@ -36,7 +36,7 @@ if (isset($_SESSION['inputEmail'])){
     if (mysqli_num_rows($user_query) == 1) {
         $isCoordinator = "Event Coordinator";
     }
-
+}
 
 
 if(isset($_POST['changePassword'])){
@@ -45,6 +45,14 @@ if(isset($_POST['changePassword'])){
 
 }
 
+if(isset($_POST['deleteAccount'])){
+    $sql = "DELETE FROM user WHERE U_email='{$email}'";
+    if ($conn->query($sql) === TRUE) {
+        header('index.php');
+    } else {
+        echo '<script>alert("Update Failed")</script>';
+    }
+}
 
 
 ?>
@@ -117,6 +125,8 @@ if(isset($_POST['changePassword'])){
                                                 $result=mysqli_query($conn,$query);
                                                 if(mysqli_num_rows($result)==1) {
                                                    $accountType="Volunteer";
+                                                }else{
+                                                    $accountType = "Generic User";
                                                 }
                                             }
                                             ?>
@@ -164,9 +174,11 @@ if(isset($_POST['changePassword'])){
 
                                                                     $query = "select VS_skill from volunteerskills where U_email='$db_email'";
                                                                     $result = mysqli_query($conn,$query);
-                                                                    $found = mysqli_fetch_assoc($result);
-                                                                    if(isset($found['VS_skill'])){
-                                                                        echo $found['VS_skill'];
+                                                                    if($result){
+                                                                        $found = mysqli_fetch_assoc($result);
+                                                                        if(isset($found['VS_skill'])){
+                                                                            echo $found['VS_skill'];
+                                                                        }
                                                                     }
                                                                     ?>
 
@@ -215,31 +227,10 @@ if(isset($_POST['changePassword'])){
 
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
-                                                    <p id="demo"></p>
+                                                    <button class="btn btn-primary" name="changePassword" type="submit"">Change Password</button>
 
-                                                    <script>
-                                                        function myFunction() {
-                                                            var txt;
-                                                            var r = confirm("Press a button!");
-                                                            if (r == true) {
-                                                                <?php
-
-                                                                $sql = "DELETE FROM user WHERE U_email='{$email}'";
-                                                                if ($conn->query($sql) === TRUE) {
-                                                                    echo '<script>alert("Success")</script>';
-                                                                    header('Location: ../login/login.php');
-                                                                } else {
-                                                                    echo '<script>alert("Update Failed")</script>';
-                                                                }
-                                                                ?>
-                                                            } else {
-                                                            }
-                                                            document.getElementById("demo").innerHTML = txt;
-                                                        }
-                                                    </script>
-                                                    <button class="btn btn-primary" name="changePassword" type="submit">Change Password</button>
-                                                    <button class="btn btn-primary" name="deleteAccount" type="submit" onclick="myFunction()">Delete Account</button>
                                             </div>
+                                                <button class="btn btn-primary" name="deleteAccount" type="submit">Delete Account</button>
 
                                         </form>
 
@@ -271,8 +262,6 @@ if(isset($_POST['changePassword'])){
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<?php
-}else die ("You need to specify a username!")
-?>
+
 </body>
 </html>
