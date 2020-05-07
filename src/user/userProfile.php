@@ -3,7 +3,7 @@ session_start();
 require_once('..\config.php');
 
 
-if (isset($_SESSION['inputEmail'])) {
+if (isset($_SESSION['inputEmail'])){
 
     $email = $_SESSION['inputEmail'];
     $pass = $_SESSION['inputPassword'];
@@ -36,7 +36,7 @@ if (isset($_SESSION['inputEmail'])) {
     if (mysqli_num_rows($user_query) == 1) {
         $isCoordinator = "Event Coordinator";
     }
-}
+
 
 
 if(isset($_POST['changePassword'])){
@@ -45,12 +45,18 @@ if(isset($_POST['changePassword'])){
 
 }
 
-if(isset($_POST['deleteAccount'])){
-    $sql = "DELETE FROM user WHERE U_email='{$email}'";
-    if ($conn->query($sql) === TRUE) {
-        header('index.php');
-    } else {
-        echo '<script>alert("Update Failed")</script>';
+
+$query = "SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
+$result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) == 1) {
+    //header('Location: ../EventCoordinatorPage/EventCoordinator.php');
+    // header('Location: profile.php');
+    $accountType = "Event Coordinator";
+} else {
+    $query = "SELECT U_email FROM volunteer WHERE U_email='$db_email'";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) == 1) {
+        $accountType = "Volunteer";
     }
 }
 
@@ -68,7 +74,7 @@ if(isset($_POST['deleteAccount'])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="sidebar.css">
-    <title>Volunteer </title><!--This is what the tab is-->
+    <title><?php echo $accountType ?> </title><!--This is what the tab is-->
     <!-- EmbedFont-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -88,7 +94,7 @@ if(isset($_POST['deleteAccount'])){
                         <div class="bar3"></div>
                     </div>
                     <div class="col mb-3">
-                        <h1 class="text-center">Volunteer Information Page</h1>
+                        <h1 class="text-center"><?php echo $accountType ?> Information Page</h1>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -112,24 +118,7 @@ if(isset($_POST['deleteAccount'])){
                                             </div>
                                         </div>
                                         <div class="text-center text-sm-right">
-                                            <?php
 
-                                            $query="SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
-                                            $result=mysqli_query($conn,$query);
-                                            if(mysqli_num_rows($result)==1) {
-                                                //header('Location: ../EventCoordinatorPage/EventCoordinator.php');
-                                                // header('Location: profile.php');
-                                                $accountType="Event Coordinator";
-                                            }else{
-                                                $query="SELECT U_email FROM volunteer WHERE U_email='$db_email'";
-                                                $result=mysqli_query($conn,$query);
-                                                if(mysqli_num_rows($result)==1) {
-                                                   $accountType="Volunteer";
-                                                }else{
-                                                    $accountType = "Generic User";
-                                                }
-                                            }
-                                            ?>
                                             <span class="badge badge-secondary"><?php echo $accountType ?></span>
                                             </div>
                                     </div>
@@ -174,11 +163,9 @@ if(isset($_POST['deleteAccount'])){
 
                                                                     $query = "select VS_skill from volunteerskills where U_email='$db_email'";
                                                                     $result = mysqli_query($conn,$query);
-                                                                    if($result){
-                                                                        $found = mysqli_fetch_assoc($result);
-                                                                        if(isset($found['VS_skill'])){
-                                                                            echo $found['VS_skill'];
-                                                                        }
+                                                                    $found = mysqli_fetch_assoc($result);
+                                                                    if(isset($found['VS_skill'])){
+                                                                        echo $found['VS_skill'];
                                                                     }
                                                                     ?>
 
@@ -227,10 +214,31 @@ if(isset($_POST['deleteAccount'])){
 
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
-                                                    <button class="btn btn-primary" name="changePassword" type="submit"">Change Password</button>
+                                                    <p id="demo"></p>
 
+                                                    <script>
+                                                        function myFunction() {
+                                                            var txt;
+                                                            var r = confirm("Press a button!");
+                                                            if (r == true) {
+                                                                <?php
+
+                                                                $sql = "DELETE FROM user WHERE U_email='{$email}'";
+                                                                if ($conn->query($sql) === TRUE) {
+                                                                    echo '<script>alert("Success")</script>';
+                                                                    header('Location: ../login/login.php');
+                                                                } else {
+                                                                    echo '<script>alert("Update Failed")</script>';
+                                                                }
+                                                                ?>
+                                                            } else {
+                                                            }
+                                                            document.getElementById("demo").innerHTML = txt;
+                                                        }
+                                                    </script>
+                                                    <button class="btn btn-primary" name="changePassword" type="submit">Change Password</button>
+                                                    <button class="btn btn-primary" name="deleteAccount" type="submit" onclick="myFunction()">Delete Account</button>
                                             </div>
-                                                <button class="btn btn-primary" name="deleteAccount" type="submit">Delete Account</button>
 
                                         </form>
 
@@ -262,6 +270,8 @@ if(isset($_POST['deleteAccount'])){
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-
+<?php
+}else die ("You need to specify a username!")
+?>
 </body>
 </html>
