@@ -47,7 +47,7 @@ if(isset($_POST['submit'])){
 //                session_start();
 //                $_SESSION = $_POST;
 //                session_write_close();
-                header('Location: ../user/user.php');
+                header('Location: ../user/Events.php');
                 echo '<script>alert("Event Created Successfully")</script>';
 
 

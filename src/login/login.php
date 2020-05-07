@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
             $query="SELECT U_email FROM eventcordinator WHERE U_email='$inputEmail'";
             $result=mysqli_query($conn,$query);
             if(mysqli_num_rows($result)==1) {
-               header('Location: ../user/user.php');
+               header('Location: ../user/Events.php');
                // header('Location: profile.php');
             }else{
                 $query="SELECT U_email FROM user WHERE U_email='$inputEmail'";
