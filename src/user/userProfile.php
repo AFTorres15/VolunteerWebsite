@@ -46,6 +46,18 @@ if(isset($_POST['changePassword'])){
 }
 
 
+$query = "SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
+$result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) == 1) {
+    $accountType = "Event Coordinator";
+} else {
+    $query = "SELECT U_email FROM volunteer WHERE U_email='$db_email'";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) == 1) {
+        $accountType = "Volunteer";
+    }
+}
+
 
 ?>
 
@@ -60,7 +72,7 @@ if(isset($_POST['changePassword'])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="sidebar.css">
-    <title>Volunteer </title><!--This is what the tab is-->
+    <title><?php echo $accountType?> </title><!--This is what the tab is-->
     <!-- EmbedFont-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -80,7 +92,8 @@ if(isset($_POST['changePassword'])){
                         <div class="bar3"></div>
                     </div>
                     <div class="col mb-3">
-                        <h1 class="text-center">Volunteer Information Page</h1>
+
+                        <h1 class="text-center"><?php echo $accountType." "?> Information Page</h1>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -104,20 +117,7 @@ if(isset($_POST['changePassword'])){
                                             </div>
                                         </div>
                                         <div class="text-center text-sm-right">
-                                            <?php
 
-                                            $query="SELECT U_email FROM eventcordinator WHERE U_email='$db_email'";
-                                            $result=mysqli_query($conn,$query);
-                                            if(mysqli_num_rows($result)==1) {
-                                                $accountType="Event Coordinator";
-                                            }else{
-                                                $query="SELECT U_email FROM volunteer WHERE U_email='$db_email'";
-                                                $result=mysqli_query($conn,$query);
-                                                if(mysqli_num_rows($result)==1) {
-                                                   $accountType="Volunteer";
-                                                }
-                                            }
-                                            ?>
                                             <span class="badge badge-secondary"><?php echo $accountType ?></span>
                                             </div>
                                     </div>
