@@ -29,7 +29,7 @@ if($approval_status == 0){
 }else{
     $status = "Approved";
 }
-$isCoordinator = "None";
+$isCoordinator = null;
 $query = "SELECT *FROM eventcordinator WHERE U_email ='$email'";
 $user_query = mysqli_query($conn,$query) or die ("The query could not be completed");
 if(mysqli_num_rows($user_query) == 1){
@@ -61,7 +61,14 @@ if(isset($_POST['approveUsers'])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="sidebar.css">
-    <title>Volunteer Login Page</title><!--This is what the tab is-->
+    <title><?php
+        if($isCoordinator){
+            echo 'Event Coordinator';
+        }
+        else{
+            echo 'Volunteer';
+        }
+        ?></title><!--This is what the tab is-->
     <!-- EmbedFont-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
