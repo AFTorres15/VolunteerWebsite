@@ -226,9 +226,9 @@ if(isset($_POST['deleteAccount'])){
                                                 <div class="col d-flex justify-content-end">
                                                     <p id="demo"></p>
                                                     <button class="btn btn-primary" name="changePassword" type="submit">Change Password</button>
-                                                    <button class="btn btn-primary" name="deleteAccount" type="submit"">Delete Account</button>
-                                            </div>
 
+                                            </div>
+                                                <button class="btn btn-primary" name="deleteAccount" type="submit"">Delete Account</button>
                                         </form>
 
                                     </div>

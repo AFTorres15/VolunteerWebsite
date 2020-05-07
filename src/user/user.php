@@ -105,7 +105,10 @@ if(isset($_POST['approveUsers'])){
                             echo "<td>".$row["E_description"]."</td>";
                             echo "<td>".$row["E_start_time"]."</td>";
                             echo "<td>".$row["E_end_time"]."</td>";
-                            echo "<td><input type=\"submit\" class=\"btn btn-primary\" value=\"Edit\"></td>";
+                            if($isCoordinator == "Event Coordinator"){
+                                echo "<td><input type=\"submit\" class=\"btn btn-primary\" value=\"Edit\"></td>";
+                            }
+
                             echo"</tr>";
                         }
                       }else {
@@ -114,8 +117,12 @@ if(isset($_POST['approveUsers'])){
                     echo"</table>";
                     ?>
                     <form class="user.php" method="POST">
-                        <button class="btn btn-lg btn-primary btn-block" name="createEvent" type="submit">Create Event</button>
-                        <button class="btn btn-lg btn-primary btn-block" name="approveUsers" type="submit">View Pending Users</button>
+                        <?php
+                        if($isCoordinator == "Event Coordinator"){
+                            echo'<button class="btn btn-lg btn-primary btn-block" name="createEvent" type="submit">Create Event</button>';
+                            echo'<button class="btn btn-lg btn-primary btn-block" name="approveUsers" type="submit">View Pending Users</button>';
+                        }
+                        ?>
                     </form>
                 </div>
 
