@@ -80,7 +80,7 @@ if(isset($_POST['approveUsers'])){
                         <div class="bar2"></div>
                         <div class="bar3"></div>
                     </div>
-                    <h1 class="text-center">Event Coordinator Home Page</h1>
+                    <h1 class="text-center"> Events </h1>
                     <h2 class="small text-center">Second Header</h2>
                     <p class="text-left">This is a very basic visual of what the website will look like for event
                         coordinators. Currently the only button that works is the hamberger menue button. None of the
@@ -107,6 +107,8 @@ if(isset($_POST['approveUsers'])){
                             echo "<td>".$row["E_end_time"]."</td>";
                             if($isCoordinator == "Event Coordinator"){
                                 echo "<td><input type=\"submit\" class=\"btn btn-primary\" value=\"Edit\"></td>";
+                            }else{
+                                echo'<td><input type="submit" class="btn btn-primary" value="Apply"></td>';
                             }
 
                             echo"</tr>";

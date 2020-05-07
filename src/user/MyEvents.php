@@ -19,7 +19,7 @@ while($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)){
     $middle_name = $row['U_middle_name'];
     $last_name = $row['U_last_name'];
     $db_email = $row['U_email'];
-    $approval_status = $row['U_isApproved'];
+    $approval_status = $row['U_is_approved'];
 }
 if($email != $db_email){
     die("There has been a fatal error. Please try again.");
